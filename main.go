@@ -23,13 +23,19 @@ import (
 )
 
 var (
-	hostname string
-	region   string
-	httpAddr string
+	hostname   string
+	region     string
+	httpAddr   string
+	projectID  string
+	bucketName string
+	objectName string
 )
 
 func main() {
 	flag.StringVar(&httpAddr, "http", "127.0.0.1:80", "HTTP service address")
+	flag.StringVar(&projectID, "project", "hightowerlabs", "Project ID")
+	flag.StringVar(&bucketName, "bucket", "hello-universe", "Bucket name")
+	flag.StringVar(&objectName, "object", "hello-universe", "Object Name")
 	flag.Parse()
 
 	var err error
@@ -46,9 +52,9 @@ func main() {
 	var dm *kargo.DeploymentManager
 	if kargo.EnableKubernetes {
 		link, err := kargo.Upload(kargo.UploadConfig{
-			ProjectID:  "hightowerlabs",
-			BucketName: "hello-universe",
-			ObjectName: "hello-universe",
+			ProjectID:  projectID,
+			BucketName: bucketName,
+			ObjectName: objectName,
 		})
 
 		if err != nil {
